@@ -45,6 +45,16 @@ def main():
     # retrieve arguments
     args = parse_args("pedigree args")
 
+
+    # TODO: save all printed things and command line
+    # in a log file that has an output prefix similar to 
+    # ped
+    log_prefix = args.ped_filename.split(".")[0]
+    log_filename = log_prefix + ".log"
+    
+    log_output = open(log_filename, 'w')
+
+    sys.stdout = log_output
     # construct pedigree data structure
     ped = PedigreeTree(args.struct_filename)
 
@@ -175,6 +185,9 @@ def main():
     # write out .ped file (optional)
     if args.ped_filename != None:
         reconstruction.write_ped(args.ped_filename)
+    
+    # close the log output 
+    log_output.close()
 
 if __name__ == "__main__":
     main()
